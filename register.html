@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register | CampusCare</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/auth.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="index.html">CampusCare</a>
+    <nav aria-label="Main navigation"><a href="index.html">Home</a><a href="login.html">Sign in</a></nav>
+  </header>
+  <main class="auth-wrap">
+    <form class="auth-card" id="register-form" novalidate>
+      <p class="eyebrow">Join CampusCare</p>
+      <h1>Create student account</h1>
+      <label for="full-name">Full name</label>
+      <input id="full-name" name="fullName" type="text" autocomplete="name" required minlength="2">
+      <label for="reg-email">Email address</label>
+      <input id="reg-email" name="email" type="email" autocomplete="email" required>
+      <label for="reg-password">Password</label>
+      <input id="reg-password" name="password" type="password" autocomplete="new-password" required minlength="6">
+      <p class="form-message" id="register-message" role="alert"></p>
+      <button class="button full-width" type="submit">Create account</button>
+      <p class="auth-switch">Already registered? <a href="login.html">Sign in</a></p>
+    </form>
+  </main>
+  <script src="js/storage.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>

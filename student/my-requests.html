@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Requests | CampusCare</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+
+    <style>
+        .requests-page {
+            max-width: 1150px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .requests-heading {
+            margin-bottom: 28px;
+        }
+
+        .requests-heading h1 {
+            color: #183153;
+            font-size: 30px;
+            margin: 10px 0;
+        }
+
+        .requests-heading p {
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        .requests-panel {
+            padding: 25px;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            box-shadow: 0 5px 20px rgba(20, 40, 70, 0.06);
+        }
+
+        .requests-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+        }
+
+        .requests-toolbar label {
+            font-weight: 600;
+            color: #263445;
+        }
+
+        .requests-toolbar select {
+            min-width: 190px;
+            padding: 11px 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            background: white;
+            font-size: 14px;
+        }
+
+        .requests-toolbar select:focus {
+            outline: none;
+            border-color: #1769aa;
+            box-shadow: 0 0 0 3px rgba(23, 105, 170, 0.12);
+        }
+
+        .requests-description {
+            margin-bottom: 20px;
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .requests-table-wrap {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        #my-requests-list table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        #my-requests-list th {
+            background: #eaf1f8;
+            color: #183153;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        #my-requests-list th,
+        #my-requests-list td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e8edf3;
+        }
+
+        #my-requests-list tr:hover td {
+            background: #f8fafc;
+        }
+
+        .requests-info {
+            margin-top: 22px;
+            padding: 15px 18px;
+            background: #eaf3fc;
+            border-left: 4px solid #1769aa;
+            border-radius: 7px;
+            color: #28547b;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 650px) {
+            .requests-page {
+                margin: 25px auto;
+                padding: 0 15px;
+            }
+
+            .requests-panel {
+                padding: 17px;
+            }
+
+            .requests-toolbar {
+                align-items: stretch;
+                flex-direction: column;
+            }
+
+            .requests-toolbar select {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="site-header">
+    <a class="brand" href="../index.html">CampusCare</a>
+
+    <nav>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="new-request.html">New request</a>
+        <a href="my-requests.html" aria-current="page">My requests</a>
+        <button class="link-button" data-logout>Sign out</button>
+    </nav>
+</header>
+
+<main class="requests-page">
+
+    <section class="requests-heading">
+        <p class="eyebrow">Student portal / Request history</p>
+
+        <h1>My maintenance requests</h1>
+
+        <p>
+            View and track all the maintenance problems
+            you have reported on campus. Check the current
+            status of each request below.
+        </p>
+    </section>
+
+    <section class="requests-panel">
+
+        <div class="requests-toolbar">
+
+            <div>
+                <label for="status-filter">Filter requests by status</label>
+                <p class="requests-description">
+                    Select a status to find specific requests.
+                </p>
+            </div>
+
+            <select id="status-filter">
+                <option value="All">All statuses</option>
+                <option>Pending</option>
+                <option>In Progress</option>
+                <option>Completed</option>
+            </select>
+
+        </div>
+
+        <div
+            id="my-requests-list"
+            class="table-wrap requests-table-wrap">
+        </div>
+
+    </section>
+
+    <div class="requests-info">
+        <strong>Request tracking:</strong>
+        New requests are initially marked as Pending.
+        The campus administrator updates the status as
+        maintenance work progresses.
+    </div>
+
+</main>
+
+<script src="../js/storage.js"></script>
+<script src="../js/student.js"></script>
+
+</body>
+</html>

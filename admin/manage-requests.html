@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Requests | CampusCare</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+
+    <style>
+        .manage-page {
+            max-width: 1150px;
+            margin: 0 auto;
+            padding: 40px 24px;
+        }
+
+        .manage-heading {
+            margin-bottom: 28px;
+        }
+
+        .manage-heading h1 {
+            margin: 8px 0;
+            color: #17324d;
+        }
+
+        .manage-heading p {
+            color: #64748b;
+        }
+
+        .manage-panel {
+            background: #ffffff;
+            padding: 26px;
+            border-radius: 14px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+        }
+
+        .manage-panel h2 {
+            margin: 0 0 20px;
+            color: #17324d;
+            font-size: 20px;
+        }
+
+        .toolbar {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        #request-search {
+            flex: 1;
+            min-width: 220px;
+        }
+
+        #request-search,
+        #admin-status-filter {
+            padding: 12px 14px;
+            border: 1px solid #d6dee8;
+            border-radius: 8px;
+            font: inherit;
+            background: #ffffff;
+        }
+
+        #admin-status-filter {
+            min-width: 160px;
+        }
+
+        .toolbar label:not(.sr-only) {
+            font-weight: 600;
+            color: #334155;
+        }
+
+        .table-wrap {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        @media (max-width: 600px) {
+            .manage-page {
+                padding: 25px 15px;
+            }
+
+            .manage-panel {
+                padding: 18px;
+            }
+
+            .toolbar {
+                align-items: stretch;
+                flex-direction: column;
+            }
+
+            #request-search,
+            #admin-status-filter {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="site-header">
+        <a class="brand" href="../index.html">CampusCare Admin</a>
+
+        <nav>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="manage-requests.html" aria-current="page">Manage requests</a>
+            <button class="link-button" data-logout>Sign out</button>
+        </nav>
+    </header>
+
+    <main class="manage-page">
+
+        <div class="manage-heading">
+            <p class="eyebrow">Administration</p>
+            <h1>Manage maintenance requests</h1>
+            <p class="muted">
+                Review student reports, search requests, and update their progress.
+            </p>
+        </div>
+
+        <section class="manage-panel">
+
+            <h2>All maintenance requests</h2>
+
+            <div class="toolbar">
+                <label class="sr-only" for="request-search">
+                    Search requests
+                </label>
+
+                <input
+                    id="request-search"
+                    type="search"
+                    placeholder="Search title, location or student..."
+                >
+
+                <label for="admin-status-filter">Filter by status:</label>
+
+                <select id="admin-status-filter">
+                    <option value="All">All statuses</option>
+                    <option>Pending</option>
+                    <option>In Progress</option>
+                    <option>Completed</option>
+                </select>
+            </div>
+
+            <div
+                id="manage-requests-list"
+                class="table-wrap"
+            ></div>
+
+        </section>
+
+    </main>
+
+    <script src="../js/storage.js"></script>
+    <script src="../js/admin.js"></script>
+
+</body>
+</html>

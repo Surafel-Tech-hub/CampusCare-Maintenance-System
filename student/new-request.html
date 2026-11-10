@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Request | CampusCare</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+
+    <style>
+        .request-page {
+            max-width: 850px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .request-heading {
+            margin-bottom: 28px;
+        }
+
+        .request-heading h1 {
+            font-size: 30px;
+            margin: 10px 0;
+            color: #183153;
+        }
+
+        .request-heading p {
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        .request-form {
+            max-width: 100%;
+            padding: 30px;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            box-shadow: 0 5px 20px rgba(20, 40, 70, 0.07);
+        }
+
+        .request-form .field {
+            margin-bottom: 20px;
+        }
+
+        .request-form label {
+            display: block;
+            margin-bottom: 9px;
+            font-weight: 600;
+            color: #263445;
+        }
+
+        .request-form input,
+        .request-form select,
+        .request-form textarea {
+            width: 100%;
+            padding: 13px 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            background: #fff;
+            font-size: 15px;
+            font-family: inherit;
+        }
+
+        .request-form input:focus,
+        .request-form select:focus,
+        .request-form textarea:focus {
+            outline: none;
+            border-color: #1769aa;
+            box-shadow: 0 0 0 3px rgba(23, 105, 170, 0.12);
+        }
+
+        .request-form textarea {
+            resize: vertical;
+            min-height: 130px;
+        }
+
+        .request-form .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .request-form .full {
+            grid-column: 1 / -1;
+        }
+
+        .request-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .request-actions .button {
+            min-width: 145px;
+            text-align: center;
+        }
+
+        .request-info {
+            margin-top: 22px;
+            padding: 15px 18px;
+            background: #eaf3fc;
+            border-left: 4px solid #1769aa;
+            border-radius: 7px;
+            color: #28547b;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 650px) {
+            .request-page {
+                margin: 25px auto;
+                padding: 0 15px;
+            }
+
+            .request-form {
+                padding: 20px;
+            }
+
+            .request-form .form-grid {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .request-form .full {
+                grid-column: auto;
+            }
+
+            .request-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .request-actions .button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="site-header">
+    <a class="brand" href="../index.html">CampusCare</a>
+
+    <nav>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="new-request.html" aria-current="page">New request</a>
+        <a href="my-requests.html">My requests</a>
+        <button class="link-button" data-logout>Sign out</button>
+    </nav>
+</header>
+
+<main class="request-page">
+
+    <section class="request-heading">
+        <p class="eyebrow">Student portal / Maintenance</p>
+
+        <h1>Submit a maintenance request</h1>
+
+        <p>
+            Having a problem on campus? Tell us about it.
+            Provide accurate details so the maintenance team
+            can understand and locate the problem quickly.
+        </p>
+    </section>
+
+    <form id="request-form" class="request-form form-grid" novalidate>
+
+        <div class="field full">
+            <label for="title">Request title</label>
+            <input
+                type="text"
+                id="title"
+                name="title"
+                required
+                maxlength="90"
+                placeholder="e.g. Broken classroom window">
+        </div>
+
+        <div class="form-grid full">
+
+            <div class="field">
+                <label for="category">Category</label>
+                <select id="category" name="category" required>
+                    <option value="">Choose a category</option>
+                    <option>Electrical</option>
+                    <option>Plumbing</option>
+                    <option>Furniture</option>
+                    <option>Building</option>
+                    <option>Cleaning</option>
+                    <option>Internet/IT</option>
+                    <option>Other</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label for="location">Location</label>
+                <input
+                    type="text"
+                    id="location"
+                    name="location"
+                    required
+                    placeholder="e.g. Block B, Room 204">
+            </div>
+
+        </div>
+
+        <div class="field full">
+            <label for="description">Description</label>
+            <textarea
+                id="description"
+                name="description"
+                rows="5"
+                required
+                minlength="10"
+                maxlength="1000"
+                placeholder="Describe what happened and any useful details..."></textarea>
+        </div>
+
+        <div class="field">
+            <label for="priority">Priority</label>
+            <select id="priority" name="priority">
+                <option>Normal</option>
+                <option>High</option>
+                <option>Urgent</option>
+            </select>
+        </div>
+
+        <div class="field full">
+
+            <div class="request-actions">
+                <button class="button" type="submit">
+                    Submit request
+                </button>
+
+                <a class="button button-outline" href="dashboard.html">
+                    Cancel
+                </a>
+            </div>
+
+            <p
+                id="request-message"
+                class="form-message"
+                role="alert">
+            </p>
+
+        </div>
+
+    </form>
+
+    <div class="request-info">
+        <strong>Important:</strong>
+        Please provide the correct building and room location.
+        Your request will initially be marked as Pending until
+        the administrator reviews it.
+    </div>
+
+</main>
+
+<script src="../js/storage.js"></script>
+<script src="../js/student.js"></script>
+
+</body>
+</html>

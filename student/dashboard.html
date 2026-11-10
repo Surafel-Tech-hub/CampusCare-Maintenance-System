@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Dashboard | CampusCare</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+
+    <style>
+        .student-page {
+            max-width: 1250px;
+            margin: 40px auto;
+            padding: 0 22px;
+        }
+
+        .student-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .student-heading h1 {
+            color: #183153;
+            font-size: 30px;
+            margin: 10px 0;
+        }
+
+        .student-heading p {
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        .student-welcome {
+            margin-bottom: 28px;
+            padding: 22px 25px;
+            background: #eaf3fc;
+            border-left: 5px solid #1769aa;
+            border-radius: 10px;
+            color: #28547b;
+            line-height: 1.7;
+        }
+
+        .student-welcome strong {
+            color: #183153;
+        }
+
+        .student-stats {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .student-stat {
+            padding: 24px;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 13px;
+            box-shadow: 0 4px 15px rgba(20, 40, 70, 0.05);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .student-stat:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(20, 40, 70, 0.09);
+        }
+
+        .student-stat span {
+            display: block;
+            color: #64748b;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 13px;
+        }
+
+        .student-stat strong {
+            display: block;
+            color: #183153;
+            font-size: 32px;
+        }
+
+        .student-stat.total {
+            border-top: 4px solid #64748b;
+        }
+
+        .student-stat.pending {
+            border-top: 4px solid #e9a23b;
+        }
+
+        .student-stat.progress {
+            border-top: 4px solid #1769aa;
+        }
+
+        .student-stat.completed {
+            border-top: 4px solid #26976a;
+        }
+
+        .student-panel {
+            padding: 25px;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 13px;
+            box-shadow: 0 4px 15px rgba(20, 40, 70, 0.05);
+        }
+
+        .student-panel-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 22px;
+        }
+
+        .student-panel-heading h2 {
+            margin: 0;
+            color: #183153;
+            font-size: 21px;
+        }
+
+        .student-panel-heading a {
+            color: #1769aa;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .student-panel-heading a:hover {
+            text-decoration: underline;
+        }
+
+        #recent-requests {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        #recent-requests table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        #recent-requests th {
+            background: #eaf1f8;
+            color: #183153;
+            text-align: left;
+            white-space: nowrap;
+        }
+
+        #recent-requests th,
+        #recent-requests td {
+            padding: 15px;
+            border-bottom: 1px solid #e8edf3;
+        }
+
+        #recent-requests tr:hover td {
+            background: #f8fafc;
+        }
+
+        .student-quick-links {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        .quick-link-card {
+            padding: 22px;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+        }
+
+        .quick-link-card h3 {
+            color: #183153;
+            margin-top: 0;
+        }
+
+        .quick-link-card p {
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        .quick-link-card a {
+            color: #1769aa;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .quick-link-card a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 850px) {
+            .student-stats {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 550px) {
+            .student-page {
+                margin: 25px auto;
+                padding: 0 15px;
+            }
+
+            .student-heading {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .student-heading h1 {
+                font-size: 25px;
+            }
+
+            .student-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .student-panel {
+                padding: 17px;
+            }
+
+            .student-quick-links {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="site-header">
+    <a class="brand" href="../index.html">CampusCare</a>
+
+    <nav>
+        <a href="dashboard.html" aria-current="page">Dashboard</a>
+        <a href="new-request.html">New request</a>
+        <a href="my-requests.html">My requests</a>
+        <button class="link-button" data-logout>Sign out</button>
+    </nav>
+</header>
+
+<main class="student-page">
+
+    <section class="student-heading">
+        <div>
+            <p class="eyebrow">Student portal / Overview</p>
+
+            <h1 id="welcome-title">Your dashboard</h1>
+
+            <p class="muted">
+                Report campus maintenance problems and
+                follow the progress of your requests.
+            </p>
+        </div>
+
+        <a class="button" href="new-request.html">
+            ＋ Submit a request
+        </a>
+    </section>
+
+    <div class="student-welcome">
+        <strong>Welcome to CampusCare!</strong>
+        <br>
+        Use this dashboard to report problems around campus,
+        track your maintenance requests, and stay updated
+        as the maintenance team works on them.
+    </div>
+
+    <section class="student-stats" aria-label="Request summary">
+
+        <article class="student-stat total">
+            <span>Total requests</span>
+            <strong id="stat-total">0</strong>
+        </article>
+
+        <article class="student-stat pending">
+            <span>Pending requests</span>
+            <strong id="stat-pending">0</strong>
+        </article>
+
+        <article class="student-stat progress">
+            <span>In progress</span>
+            <strong id="stat-progress">0</strong>
+        </article>
+
+        <article class="student-stat completed">
+            <span>Completed</span>
+            <strong id="stat-completed">0</strong>
+        </article>
+
+    </section>
+
+    <section class="student-panel">
+
+        <div class="student-panel-heading">
+            <h2>Recent requests</h2>
+
+            <a href="my-requests.html">
+                View all requests →
+            </a>
+        </div>
+
+        <div id="recent-requests" class="table-wrap"></div>
+
+    </section>
+
+    <section class="student-quick-links">
+
+        <article class="quick-link-card">
+            <h3>Report a new problem</h3>
+
+            <p>
+                Found a maintenance issue in your classroom,
+                dormitory, or another campus facility?
+                Submit a request to notify the maintenance team.
+            </p>
+
+            <a href="new-request.html">
+                Submit a request →
+            </a>
+        </article>
+
+        <article class="quick-link-card">
+            <h3>Track your requests</h3>
+
+            <p>
+                Review your previously submitted requests
+                and check whether they are pending,
+                in progress, or completed.
+            </p>
+
+            <a href="my-requests.html">
+                View my requests →
+            </a>
+        </article>
+
+    </section>
+
+</main>
+
+<script src="../js/storage.js"></script>
+<script src="../js/student.js"></script>
+
+</body>
+</html>
