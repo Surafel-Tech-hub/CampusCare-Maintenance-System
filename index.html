@@ -1,61 +1,414 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Campus Maintenance Request System">
-  <title>Campus Maintenance Request System</title>
-  <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Campus Maintenance Request System">
+    <title>CampusCare | A Better Campus Starts With Us</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        /* INTRO SCREEN */
+        .intro-screen {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: #101d35;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+            overflow: hidden;
+            padding: 24px;
+        }
+
+        html.show-intro .intro-screen {
+            display: flex;
+        }
+
+        html.show-intro body > :not(.intro-screen) {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        body > header,
+        body > main,
+        body > footer {
+            transition: opacity 0.9s ease;
+        }
+
+        .intro-screen::before {
+            content: "";
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: #1768a8;
+            filter: blur(150px);
+            opacity: 0.22;
+            border-radius: 50%;
+            top: -250px;
+            right: -150px;
+        }
+
+        .intro-screen::after {
+            content: "";
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: #168bba;
+            filter: blur(150px);
+            opacity: 0.16;
+            border-radius: 50%;
+            bottom: -250px;
+            left: -100px;
+        }
+
+        .intro-content {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+        }
+
+        .intro-brand {
+            color: #ffffff;
+            font-size: clamp(2.8rem, 9vw, 6.5rem);
+            font-weight: 900;
+            letter-spacing: 0.12em;
+            margin: 0 0 22px;
+            opacity: 0;
+            animation: intro-reveal 0.9s ease forwards;
+        }
+
+        /* IMAGE MASKED INSIDE THE HEADING */
+        .masked-heading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            margin: 0;
+        }
+
+        .masked-line {
+            display: block;
+            font-size: clamp(8rem, 17.5vw, 10rem);
+            font-weight: 1200;
+            line-height: 1.05;
+            letter-spacing: -0.055em;
+                  -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.18);
+            background-image:
+                linear-gradient(
+                    90deg,
+                    rgba(8, 25, 48, 0.1),
+                    rgba(8, 25, 48, 0.1)
+                ),
+                url("https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1800&q=85");
+
+            background-size: 200% auto;
+            background-position: 0% center;
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+
+            opacity: 0;
+            animation:
+                heading-reveal 3s ease forwards,
+                image-move 8s linear infinite;
+        }
+
+        .masked-line:nth-child(1) {
+            animation-delay: 0.8s, 0s;
+        }
+
+        .masked-line:nth-child(2) {
+            animation-delay: 1.6s, 0s;
+        }
+
+        .intro-caption {
+            color: #b9cce0;
+            font-size: 12px;
+            letter-spacing: 0.28em;
+            text-transform: uppercase;
+            margin-top: 35px;
+            opacity: 0;
+            animation: intro-reveal 0.8s ease 2.4s forwards;
+        }
+
+        .intro-loader {
+            width: 150px;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.15);
+            margin: 25px auto 0;
+            overflow: hidden;
+            border-radius: 10px;
+            opacity: 0;
+            animation: intro-reveal 0.5s ease 2.5s forwards;
+        }
+
+        .intro-loader span {
+            display: block;
+            height: 100%;
+            width: 100%;
+            background: #65b9ff;
+            transform: scaleX(0);
+            transform-origin: left;
+            animation: loading 1.5s ease 2.7s forwards;
+        }
+
+        .skip-intro {
+            position: absolute;
+            z-index: 3;
+            bottom: 35px;
+            right: 35px;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            color: #ffffff;
+            padding: 10px 18px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: background 0.3s ease;
+        }
+
+        .skip-intro:hover {
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .intro-screen.is-leaving {
+            animation: intro-fade-out 0.8s ease forwards;
+            pointer-events: none;
+        }
+
+        @keyframes intro-reveal {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes heading-reveal {
+            from {
+                opacity: 0;
+                transform: translateY(35px);
+                filter: blur(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+                filter: blur(0);
+            }
+        }
+
+        @keyframes image-move {
+            from {
+                background-position: 0% center;
+            }
+            to {
+                background-position: 100% center;
+            }
+        }
+
+        @keyframes loading {
+            to {
+                transform: scaleX(1);
+            }
+        }
+
+        @keyframes intro-fade-out {
+            to {
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .skip-intro {
+                bottom: 20px;
+                right: 20px;
+            }
+
+            .intro-caption {
+                font-size: 10px;
+                letter-spacing: 0.16em;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .intro-screen,
+            .intro-screen * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+
+    <script>
+       // Show the intro every time the homepage loads.
+document.documentElement.classList.add("show-intro");
+    </script>
 </head>
+
 <body>
-  <header class="site-header">
-    <a class="brand" href="index.html">CampusCare</a>
-    <nav aria-label="Main navigation">
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a class="button button-small" href="login.html">Sign in</a>
-    </nav>
-  </header>
 
-  <main>
-    <section class="hero">
-      <p class="eyebrow">Wollo University · Campus services</p>
-      <h1>Report it. Track it. <span>Get it fixed.</span></h1>
-      <p class="hero-copy">A simple way for students to report campus maintenance problems and follow their progress.</p>
-      <div class="hero-actions">
-        <a class="button" href="register.html">Create student account</a>
-        <a class="button button-outline" href="login.html">Sign in</a>
-      </div>
+    <!-- CAMPUSCARE INTRO ANIMATION -->
+    <section class="intro-screen" id="intro-screen" aria-label="CampusCare introduction">
+
+        <div class="intro-content">
+
+            <h1 class="intro-brand">CAMPUSCARE</h1>
+
+            <h2 class="masked-heading">
+                <span class="masked-line">A BETTER CAMPUS</span>
+                <span class="masked-line">STARTS WITH US.</span>
+            </h2>
+
+            <p class="intro-caption">
+                Your campus. Our responsibility.
+            </p>
+
+            <div class="intro-loader">
+                <span></span>
+            </div>
+
+        </div>
+
+        <button class="skip-intro" id="skip-intro" type="button">
+            Skip intro →
+        </button>
+
     </section>
 
-    <section class="features" aria-labelledby="features-title">
-      <div class="section-heading">
-        <p class="eyebrow">How it works</p>
-        <h2 id="features-title">Maintenance requests, made clearer</h2>
-      </div>
-      <div class="feature-grid">
-        <article class="feature-card">
-          <div class="feature-icon" aria-hidden="true">01</div>
-          <h3>Submit a request</h3>
-          <p>Describe the issue, choose its category and tell the maintenance team where it happened.</p>
-        </article>
-        <article class="feature-card">
-          <div class="feature-icon" aria-hidden="true">02</div>
-          <h3>Track progress</h3>
-          <p>Check whether your request is pending, being worked on or completed.</p>
-        </article>
-        <article class="feature-card">
-          <div class="feature-icon" aria-hidden="true">03</div>
-          <h3>Manage efficiently</h3>
-          <p>Administrators can review, search and update submitted maintenance requests.</p>
-        </article>
-      </div>
-    </section>
-  </main>
 
-  <footer class="site-footer">
-    <p>Campus Maintenance Request System · INSY3061 Group Project</p>
-    <p class="small-note">Academic frontend prototype. Data is stored in this browser.</p>
-  </footer>
+    <!-- EXISTING CAMPUSCARE WEBSITE -->
+
+    <header class="site-header">
+        <a class="brand" href="index.html">CampusCare</a>
+
+        <nav aria-label="Main navigation">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a class="button button-small" href="login.html">Sign in</a>
+        </nav>
+    </header>
+
+    <main>
+
+        <section class="hero">
+            <p class="eyebrow">Wollo University · Campus services</p>
+
+            <h1>Report it. Track it. <span>Get it fixed.</span></h1>
+
+            <p class="hero-copy">
+                A simple way for students to report campus maintenance
+                problems and follow their progress.
+            </p>
+
+            <div class="hero-actions">
+                <a class="button" href="register.html">
+                    Create student account
+                </a>
+
+                <a class="button button-outline" href="login.html">
+                    Sign in
+                </a>
+            </div>
+        </section>
+
+
+        <section class="features" aria-labelledby="features-title">
+
+            <div class="section-heading">
+                <p class="eyebrow">How it works</p>
+                <h2 id="features-title">
+                    Maintenance requests, made clearer
+                </h2>
+            </div>
+
+            <div class="feature-grid">
+
+                <article class="feature-card">
+                    <div class="feature-icon" aria-hidden="true">01</div>
+                    <h3>Submit a request</h3>
+                    <p>
+                        Describe the issue, choose its category and tell
+                        the maintenance team where it happened.
+                    </p>
+                </article>
+
+                <article class="feature-card">
+                    <div class="feature-icon" aria-hidden="true">02</div>
+                    <h3>Track progress</h3>
+                    <p>
+                        Check whether your request is pending, being
+                        worked on or completed.
+                    </p>
+                </article>
+
+                <article class="feature-card">
+                    <div class="feature-icon" aria-hidden="true">03</div>
+                    <h3>Manage efficiently</h3>
+                    <p>
+                        Administrators can review, search and update
+                        submitted maintenance requests.
+                    </p>
+                </article>
+
+            </div>
+        </section>
+
+    </main>
+
+
+    <footer class="site-footer">
+        <p>Campus Maintenance Request System · INSY3061 Group Project</p>
+        <p class="small-note">
+            Academic frontend prototype. Data is stored in this browser.
+        </p>
+    </footer>
+
+
+    <!-- INTRO ANIMATION CONTROL -->
+    <script>
+        (function () {
+            const intro = document.getElementById("intro-screen");
+            const skipButton = document.getElementById("skip-intro");
+            const html = document.documentElement;
+
+            if (!html.classList.contains("show-intro")) {
+                return;
+            }
+
+            let finished = false;
+
+            function finishIntro() {
+                if (finished) return;
+
+                finished = true;
+                intro.classList.add("is-leaving");
+
+                setTimeout(function () {
+                    html.classList.remove("show-intro");
+                    intro.remove();
+                }, 850);
+            }
+
+            // Automatically finish the intro after approximately 4.5 seconds.
+            const introTimer = setTimeout(finishIntro, 4500);
+
+            // Allow visitors to skip the animation.
+            skipButton.addEventListener("click", function () {
+                clearTimeout(introTimer);
+                finishIntro();
+            });
+        })();
+    </script>
+
 </body>
 </html>
